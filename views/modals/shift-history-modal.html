@@ -1,0 +1,76 @@
+<!-- COMPONENTE MODAL: Auditoría e Historial de Turnos Cerrados (views/modals/shift-history-modal.html) -->
+<div id="modal-historial-turnos" class="fixed inset-0 z-[90] bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-white border border-slate-300 w-full max-w-4xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] modal-animate-in">
+    <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white">
+      <div>
+        <h3 class="font-bold text-white text-sm uppercase tracking-wide">Auditoría e Historial de Turnos Cerrados</h3>
+        <p class="text-xs text-slate-400">Control administrativo de jornadas, recaudación y huéspedes atendidos por operador</p>
+      </div>
+      <button onclick="cerrarModalHistorialTurnos()" class="text-slate-400 hover:text-white p-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="p-5 flex-1 overflow-y-auto space-y-4 text-xs bg-slate-50">
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-lg border border-slate-200">
+        <div class="flex items-center gap-2.5">
+          <span class="text-slate-600 font-semibold">Filtrar por Operador:</span>
+          <select id="filtro-historial-empleado" onchange="renderHistorialTurnos()" class="bg-white border border-slate-300 rounded-md px-3 py-1 text-slate-900 text-xs font-medium">
+            <option value="todos">Todos los operadores</option>
+            <option value="Wilson Paredes">Wilson Paredes</option>
+            <option value="Denis Salazar">Denis Salazar</option>
+            <option value="Carmen Rojas">Carmen Rojas</option>
+            <option value="Administrador">Administrador</option>
+          </select>
+        </div>
+        <div class="text-slate-600 text-xs">
+          Actas registradas: <strong id="total-turnos-badge" class="text-slate-900 font-mono">0</strong>
+        </div>
+      </div>
+
+      <div id="lista-turnos-cerrados" class="space-y-2.5"></div>
+    </div>
+
+    <div class="bg-white px-6 py-3 border-t border-slate-200 flex justify-end">
+      <button onclick="cerrarModalHistorialTurnos()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-5 py-2 rounded-lg text-xs transition">
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-detalle-turno-especifico" class="fixed inset-0 z-[95] bg-slate-900/70 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-white border border-slate-300 w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] modal-animate-in">
+    <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white">
+      <div>
+        <h3 class="font-bold text-white text-sm uppercase tracking-wide" id="dte-titulo">Detalle de Turno</h3>
+        <p class="text-xs text-slate-400" id="dte-subtitulo"></p>
+      </div>
+      <button onclick="document.getElementById('modal-detalle-turno-especifico').classList.add('hidden')" class="text-slate-400 hover:text-white p-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="p-6 flex-1 overflow-y-auto space-y-4 text-xs bg-slate-50">
+      <div class="grid grid-cols-3 gap-3 text-center">
+        <div class="bg-white p-3 rounded-lg border border-slate-200">
+          <span class="text-slate-500 block text-[10px] uppercase font-bold">Huéspedes Registrados</span>
+          <strong id="dte-registros" class="text-slate-900 font-bold text-base font-mono">0</strong>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-slate-200">
+          <span class="text-slate-500 block text-[10px] uppercase font-bold">Efectivo Entregado</span>
+          <strong id="dte-efectivo" class="text-emerald-400 font-mono font-bold text-base">$0.00</strong>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-slate-200">
+          <span class="text-slate-500 block text-[10px] uppercase font-bold">Total Recaudado</span>
+          <strong id="dte-total" class="text-slate-900 font-mono font-bold text-base">$0.00</strong>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-slate-700 uppercase tracking-wider text-[10px] mb-2">Desglose de Operaciones del Turno:</h4>
+        <div id="dte-lista-movimientos" class="space-y-2"></div>
+      </div>
+    </div>
+  </div>
+</div>

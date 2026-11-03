@@ -1,0 +1,24 @@
+[
+  {
+    "id": "TUR-355553",
+    "empleado": "Wilson Paredes",
+    "cargo": "Recepcionista",
+    "turno": "Mañana (08:00 – 17:00)",
+    "horaInicio": "2026-10-20T15:32:35.553Z",
+    "horaFin": "2026-10-20T20:37:18.304Z",
+    "totalPagado": 0,
+    "totalEfectivo": 0,
+    "totalTransferencia": 0,
+    "totalDatafono": 0,
+    "totalDebito": 0,
+    "registros": [
+      {
+        "tipo": "CIERRE DE TURNO",
+        "descripcion": "Wilson Paredes finalizó formalmente su turno",
+        "hab": null,
+        "hora": "2026-10-20T20:37:18.304Z",
+        "empleado": "Wilson Paredes"
+      }
+    ]
+  }
+]

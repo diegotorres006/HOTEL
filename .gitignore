@@ -1,0 +1,22 @@
+# Dependencias y logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Entornos y temporales de sistema
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+
+# Backups volumétricos automáticos de la base de datos (se preservan los schemas base y datos semilla)
+data/backups/snapshot_*.json
+scratch/
+
+# IDE y editores locales
+.idea/
+.vscode/
+*.swp
+*.swo

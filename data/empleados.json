@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "nombre": "Wilson Paredes",
+    "cargo": "Recepcionista",
+    "pin": "1234",
+    "turno": "Mañana (08:00 – 17:00)",
+    "color": "bg-slate-800"
+  },
+  {
+    "id": 2,
+    "nombre": "Denis Salazar",
+    "cargo": "Recepcionista",
+    "pin": "5678",
+    "turno": "Noche (22:00 – 06:00)",
+    "color": "bg-blue-800"
+  },
+  {
+    "id": 3,
+    "nombre": "Carmen Rojas",
+    "cargo": "Recepcionista",
+    "pin": "9012",
+    "turno": "Tarde (14:00 – 22:00)",
+    "color": "bg-teal-800"
+  },
+  {
+    "id": 4,
+    "nombre": "Administradora General",
+    "cargo": "Administración",
+    "pin": "0000",
+    "turno": "Supervisión General",
+    "color": "bg-purple-900"
+  }
+]

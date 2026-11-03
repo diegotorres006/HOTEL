@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1792606268823,
+    "fecha": "2026-10-21",
+    "hora": "13:11",
+    "timestamp": "2026-10-21T18:11:08.823Z",
+    "productoId": 3,
+    "productoNombre": "Coca Cola Regular (350ml)",
+    "codigo": "BAR-003",
+    "categoria": "Bebidas Frías",
+    "cantidad": 1,
+    "precioUnitario": 1.5,
+    "total": 1.5,
+    "destino": "Venta en Barra",
+    "habitacionId": null,
+    "habitacionNumero": null,
+    "huespedNombre": null,
+    "estadoPago": "pagado",
+    "metodoPago": "Efectivo",
+    "registradoPor": "Wilson Paredes",
+    "turnoId": "TUR-224692"
+  }
+]

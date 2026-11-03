@@ -1,0 +1,92 @@
+<!-- COMPONENTE MODAL: Arqueo de Caja del Turno (views/modals/cash-audit-modal.html) -->
+<div id="modal-arqueo" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-white border border-slate-300 w-full max-w-lg rounded-xl shadow-2xl overflow-hidden text-xs modal-animate-in">
+    <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white">
+      <div>
+        <h3 class="font-bold text-white text-sm uppercase tracking-wide">Arqueo y Estado de Cajas del Turno</h3>
+        <p class="text-slate-400 text-[11px]">Control contable independiente: Caja Hospedaje ($200 Base) y Caja Bar ($50 Base)</p>
+      </div>
+      <button onclick="cerrarModalArqueo()" class="text-slate-400 hover:text-white p-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="p-6 space-y-4 text-slate-700">
+      <!-- Datos de la Sesión -->
+      <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-1.5">
+        <div class="flex justify-between"><span class="text-slate-500 font-medium">Operador Responsable:</span> <strong id="arq-empleado" class="text-slate-900 font-bold"></strong></div>
+        <div class="flex justify-between"><span class="text-slate-500 font-medium">Turno Asignado:</span> <span id="arq-turno" class="text-slate-800 font-semibold"></span></div>
+        <div class="flex justify-between"><span class="text-slate-500 font-medium">Apertura de Turno:</span> <span id="arq-inicio" class="font-mono text-slate-700"></span></div>
+        <div class="flex justify-between"><span class="text-slate-500 font-medium">Hora de Consulta:</span> <span id="arq-ahora" class="font-mono text-slate-700 font-semibold"></span></div>
+      </div>
+
+      <!-- Cuadrante de Cajas Independientes -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <!-- Caja 1: Hospedaje -->
+        <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-1.5">
+            <span class="font-bold text-slate-900 uppercase text-[11px] tracking-wide">Caja Hospedaje</span>
+            <span class="bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold font-mono text-[10px] px-1.5 py-0.5 rounded">Fondo $200</span>
+          </div>
+          <div class="flex justify-between text-[11px]"><span class="text-slate-500">Fondo Fijo Inicial:</span> <strong id="arq-hosp-fondo" class="font-mono text-slate-800">$200.00</strong></div>
+          <div class="flex justify-between text-[11px]"><span class="text-slate-500">Recaudado Efectivo:</span> <strong id="arq-hosp-recaudado" class="font-mono text-emerald-600 font-bold">+$0.00</strong></div>
+          <div class="flex justify-between text-[11px] pt-1 border-t border-slate-200 bg-emerald-50/60 p-1.5 rounded">
+            <span class="font-bold text-slate-900">Total en Gaveta Hospedaje:</span>
+            <strong id="arq-hosp-gaveta" class="font-mono text-emerald-700 font-bold text-xs">$200.00</strong>
+          </div>
+          <div class="flex justify-between text-[10.5px] text-slate-500 pt-1">
+            <span>Cobros Digitales Hosp.:</span>
+            <strong id="arq-hosp-digitales" class="font-mono text-slate-700">$0.00</strong>
+          </div>
+        </div>
+
+        <!-- Caja 2: Bar -->
+        <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-1.5">
+            <span class="font-bold text-slate-900 uppercase text-[11px] tracking-wide">Caja Bar</span>
+            <span class="bg-sky-100 text-sky-800 border border-sky-300 font-bold font-mono text-[10px] px-1.5 py-0.5 rounded">Fondo $50</span>
+          </div>
+          <div class="flex justify-between text-[11px]"><span class="text-slate-500">Fondo Fijo Inicial:</span> <strong id="arq-bar-fondo" class="font-mono text-slate-800">$50.00</strong></div>
+          <div class="flex justify-between text-[11px]"><span class="text-slate-500">Recaudado Efectivo:</span> <strong id="arq-bar-recaudado" class="font-mono text-sky-600 font-bold">+$0.00</strong></div>
+          <div class="flex justify-between text-[11px] pt-1 border-t border-slate-200 bg-sky-50/60 p-1.5 rounded">
+            <span class="font-bold text-slate-900">Total en Gaveta Bar:</span>
+            <strong id="arq-bar-gaveta" class="font-mono text-sky-700 font-bold text-xs">$50.00</strong>
+          </div>
+          <div class="flex justify-between text-[10.5px] text-slate-500 pt-1">
+            <span>Cobros Digitales Bar:</span>
+            <strong id="arq-bar-digitales" class="font-mono text-slate-700">$0.00</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumen Global de Cajas y Rotación -->
+      <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-slate-700 font-bold">Total Efectivo Físico en Hotel (Gaveta Hosp + Bar):</span>
+          <strong id="arq-total-fisico" class="text-slate-900 font-mono font-bold text-sm">$250.00</strong>
+        </div>
+        <div class="flex justify-between items-center text-xs text-purple-900 bg-purple-50 p-2 rounded border border-purple-200">
+          <span class="font-bold">Ganancia Total a Retirar por Administradora al Cierre:</span>
+          <strong id="arq-retiro-admin" class="font-mono font-bold text-sm text-purple-700">$0.00</strong>
+        </div>
+        <div class="flex justify-between items-center text-[11px] text-slate-600">
+          <span>Fondos Fijos que Permanecen en Cajas para Siguiente Turno:</span>
+          <strong id="arq-fondos-remanentes" class="font-mono font-bold text-slate-800">$250.00 ($200 Hosp + $50 Bar)</strong>
+        </div>
+        <div class="flex justify-between text-amber-700 border-t border-slate-200 pt-2 font-semibold text-xs">
+          <span>Cuentas por Cobrar (Débitos de Huéspedes):</span>
+          <strong id="arq-debito" class="font-mono font-bold">$0.00</strong>
+        </div>
+      </div>
+
+      <div class="pt-2 flex justify-between gap-2">
+        <button onclick="cerrarSesionDesdeArqueo()" class="bg-red-800 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg text-xs transition">
+          Proceder al Cierre de Turno
+        </button>
+        <button onclick="cerrarModalArqueo()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2 rounded-lg transition">
+          Cerrar Ventana
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

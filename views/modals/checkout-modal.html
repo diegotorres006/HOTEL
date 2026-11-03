@@ -1,0 +1,57 @@
+<!-- COMPONENTE MODAL: Registro de Salida Check-out (views/modals/checkout-modal.html) -->
+<div id="modal-checkout" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-white border border-slate-300 w-full max-w-md rounded-xl shadow-2xl overflow-hidden modal-animate-in">
+    <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white">
+      <div class="flex items-center gap-3">
+        <span id="co-hab-num" class="bg-red-700 text-white font-mono font-bold text-base px-3 py-1 rounded">#01</span>
+        <div>
+          <h3 class="font-bold text-white text-sm uppercase tracking-wide">Registro de Salida (Check-out)</h3>
+          <p id="co-huesped-nombre" class="text-xs text-slate-300"></p>
+        </div>
+      </div>
+      <button onclick="cerrarModalCheckout()" class="text-slate-400 hover:text-white p-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="p-6 space-y-4 text-xs text-slate-700">
+      <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2.5">
+        <div class="flex justify-between items-center">
+          <span class="text-slate-500 font-medium">Hora de Ingreso Registrada:</span>
+          <span id="co-hora-entrada-prev" class="font-mono text-slate-900 font-bold"></span>
+        </div>
+        <div class="flex justify-between items-center pt-2.5 border-t border-slate-200">
+          <label class="text-slate-900 font-bold uppercase text-[11px]">Hora de Salida Real *</label>
+          <input type="time" id="co-hora-salida" class="bg-white border border-slate-300 rounded-md px-2.5 py-1 font-mono text-slate-900 font-bold text-sm focus:outline-none">
+        </div>
+      </div>
+
+      <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
+        <h4 class="font-bold text-slate-800 uppercase text-[10px] tracking-wider">Verificación de Inventario Devuelto</h4>
+        <div class="grid grid-cols-2 gap-3 pt-1">
+          <div>
+            <label class="text-slate-600 block text-[11px] font-medium mb-1">Controles recibidos:</label>
+            <input type="number" id="co-controles" min="0" max="5" value="1" class="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1 text-slate-900 font-mono font-bold">
+            <span id="co-controles-esperados" class="text-[10px] text-slate-500 block mt-0.5"></span>
+          </div>
+          <div>
+            <label class="text-slate-600 block text-[11px] font-medium mb-1">Toallas recibidas:</label>
+            <input type="number" id="co-toallas" min="0" max="10" value="2" class="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1 text-slate-900 font-mono font-bold">
+            <span id="co-toallas-esperadas" class="text-[10px] text-slate-500 block mt-0.5"></span>
+          </div>
+        </div>
+      </div>
+
+      <div id="co-alerta-debito" class="hidden bg-amber-950/70 border-l-4 border-l-amber-500 border border-amber-800 p-3 rounded-lg text-amber-200">
+        <strong>Saldo Pendiente:</strong> La habitación registra un valor por cobrar de <span id="co-monto-debito" class="font-bold font-mono"></span>.
+      </div>
+
+      <div class="pt-3 border-t border-slate-200 flex justify-end gap-2">
+        <button onclick="cerrarModalCheckout()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold">Cancelar</button>
+        <button onclick="confirmarSalidaHuesped()" class="px-5 py-2 bg-blue-700 hover:bg-blue-600 text-white rounded-lg font-semibold">
+          Confirmar Salida y Liberar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

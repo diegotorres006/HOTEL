@@ -1,0 +1,126 @@
+<!-- COMPONENTE MODAL: Ficha de Detalle de Habitación (views/modals/room-detail-modal.html) -->
+<div id="modal-detalle-hab" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-white border border-slate-300 w-full max-w-lg rounded-xl shadow-2xl overflow-hidden modal-animate-in">
+    <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white">
+      <div class="flex items-center gap-3">
+        <span id="det-hab-num" class="bg-blue-700 text-white font-mono font-bold text-base px-3 py-1 rounded">#01</span>
+        <div>
+          <h3 id="det-hab-estado" class="font-bold text-white text-sm uppercase tracking-wide">Ficha de Habitación</h3>
+          <p id="det-hab-tipo" class="text-xs text-slate-300"></p>
+        </div>
+      </div>
+      <button onclick="cerrarModalDetalle()" class="text-slate-400 hover:text-white p-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="p-6 space-y-4 text-xs text-slate-700">
+      <div id="det-aviso-pasado-bloqueado" class="hidden bg-amber-950/70 border-l-4 border-l-amber-500 border border-amber-800 p-3 rounded-lg text-amber-200">
+        <strong class="uppercase block font-bold text-[11px]">Registro Histórico Cerrado — Solo Lectura</strong>
+        <span class="text-[11px]">No se admiten modificaciones sobre registros de fechas anteriores.</span>
+      </div>
+
+      <div id="det-aviso-reserva-futura" class="hidden bg-indigo-950/70 border-l-4 border-l-indigo-500 border border-indigo-800 p-3 rounded-lg text-indigo-200">
+        <strong class="uppercase block font-bold text-[11px]">Reserva Confirmada</strong>
+        <span class="text-[11px]">Habitación programada para ingreso futuro.</span>
+      </div>
+
+      <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2">
+        <div class="flex justify-between"><span class="text-slate-500 font-medium">Titular Alojado:</span> <strong id="det-huesped-nombre" class="text-slate-900 font-bold"></strong></div>
+        <div class="flex justify-between"><span class="text-slate-500 font-medium">Identificación:</span> <span id="det-huesped-ci" class="font-mono text-slate-800 font-semibold"></span></div>
+        <div class="flex justify-between"><span class="text-slate-500 font-medium">Procedencia:</span> <span id="det-huesped-proc" class="text-slate-800"></span></div>
+        <div class="flex justify-between"><span class="text-slate-500 font-medium">Teléfono:</span> <span id="det-huesped-tel" class="font-mono text-slate-800"></span></div>
+
+        <div class="border-t border-slate-200 pt-2.5 mt-2.5 space-y-1.5 bg-white p-2.5 rounded border border-slate-200">
+          <div class="flex justify-between items-center">
+            <span class="text-slate-500 font-semibold">Operador que registró:</span>
+            <span id="det-registrado-por" class="text-slate-900 font-bold"></span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-slate-500">Turno asignado:</span>
+            <span id="det-turno-registro" class="text-slate-700 font-medium"></span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-slate-500">Hora de Ingreso:</span>
+            <span id="det-hora-registro" class="font-mono text-emerald-400 font-bold"></span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-slate-500">Hora de Salida:</span>
+            <span id="det-hora-salida" class="font-mono text-slate-700 font-semibold">Alojado actualmente</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2.5 text-center">
+        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+          <span id="det-lbl-pagado" class="text-slate-500 block text-[10px] uppercase font-bold">Monto Abonado</span>
+          <strong id="det-pagado" class="text-emerald-400 font-mono font-bold text-sm"></strong>
+        </div>
+        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+          <span id="det-lbl-debito" class="text-slate-500 block text-[10px] uppercase font-bold">Saldo Pendiente</span>
+          <strong id="det-debito" class="text-amber-400 font-mono font-bold text-sm"></strong>
+        </div>
+        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+          <span id="det-lbl-items" class="text-slate-500 block text-[10px] uppercase font-bold">Dotación</span>
+          <strong id="det-dotacion" class="text-slate-800 font-bold text-xs"></strong>
+        </div>
+      </div>
+
+      <!-- Consumos de Bar / Frigobar Imputados a la Habitación -->
+      <div id="det-seccion-bar-cargos" class="hidden bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] uppercase font-bold text-slate-500 block">Consumos de Bar / Frigobar</span>
+          <span id="det-bar-total-cargos" class="font-mono text-xs font-bold text-amber-600"></span>
+        </div>
+        <div id="det-bar-lista-cargos" class="space-y-1 max-h-28 overflow-y-auto text-[11px] text-slate-600">
+          <!-- Lista de consumos -->
+        </div>
+      </div>
+
+      <div id="det-alerta-12pm" class="bg-amber-950/70 border-l-4 border-l-amber-500 border border-amber-800 p-3 rounded-lg text-amber-200 text-xs hidden">
+        <strong>Verificación de Mediodía (12:00 PM):</strong> Confirmar si el huésped renueva estadía o realiza la entrega de la habitación.
+      </div>
+
+      <!-- Estado de Facturación D2Fac en la Habitación -->
+      <div id="det-seccion-factura-d2fac" class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <div>
+            <span class="text-[10px] uppercase font-bold text-slate-500 block">Facturación Electrónica D2Fac (SRI)</span>
+            <strong id="det-estado-factura-txt" class="text-xs text-slate-800">No solicitada por el cliente</strong>
+          </div>
+          <div id="det-botones-factura-emitida" class="hidden flex items-center gap-1.5">
+            <button onclick="imprimirTicketFacturaHabActual()" class="bg-blue-800 hover:bg-blue-700 text-white px-2.5 py-1 rounded text-[11px] font-semibold transition">
+              Ticket D2Fac
+            </button>
+            <button onclick="verPdfFacturaHabActual()" class="bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-800 px-2.5 py-1 rounded text-[11px] font-semibold transition">
+              PDF RIDE
+            </button>
+          </div>
+          <div id="det-botones-emitir-ahora" class="flex items-center gap-1.5">
+            <button onclick="emitirFacturaDesdeDetalle('usuario')" class="bg-blue-800/80 hover:bg-blue-700 text-white px-2.5 py-1 rounded text-[11px] font-semibold transition" title="Emitir factura con los datos del huésped">
+              Facturar a Usuario
+            </button>
+            <button onclick="emitirFacturaDesdeDetalle('empresa')" class="bg-indigo-900/80 hover:bg-indigo-800 text-indigo-100 border border-indigo-700 px-2.5 py-1 rounded text-[11px] font-semibold transition" title="Emitir factura con RUC de Empresa">
+              Facturar a Empresa
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="det-acciones-container" class="pt-3 border-t border-slate-200 flex justify-between items-center">
+        <button id="btn-det-lista-negra" onclick="reportarHuespedListaNegra()" class="text-red-400 hover:text-red-300 font-semibold underline text-[11px]">
+          Reportar Incidencia / Restringir
+        </button>
+        <div class="flex gap-2 flex-wrap justify-end">
+          <button id="btn-det-hacer-checkin" onclick="iniciarCheckinDesdeDetalleReserva()" class="hidden bg-emerald-700 hover:bg-emerald-600 text-white font-semibold px-3.5 py-2 rounded-lg text-xs transition">Registrar Check-in Ahora</button>
+          <button id="btn-det-cambiar-hab" onclick="cambiarHabitacionDesdeDetalleReserva()" class="hidden bg-purple-700 hover:bg-purple-600 text-white font-semibold px-3 py-2 rounded-lg text-xs transition">Cambiar Habitación Asignada</button>
+          <button id="btn-det-extender" onclick="extenderEstadiaModal()" class="hidden bg-slate-800 hover:bg-slate-700 text-white font-semibold px-3 py-2 rounded-lg">Renovar +1 Día</button>
+          <button id="btn-det-checkout" onclick="abrirModalCheckout()" class="hidden bg-red-700 hover:bg-red-800 text-white font-semibold px-3.5 py-2 rounded-lg">Registrar Salida (Check-out)</button>
+          <button id="btn-det-abonar" onclick="agregarAbonoReservaModal()" class="hidden bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-3 py-2 rounded-lg">Registrar Abono</button>
+          <button id="btn-det-cancelar-reserva" onclick="cancelarReservaModal()" class="hidden bg-red-700 hover:bg-red-800 text-white font-semibold px-3 py-2 rounded-lg">Anular Reserva</button>
+          <button id="btn-det-cerrar-pasado" onclick="cerrarModalDetalle()" class="hidden bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold px-4 py-2 rounded-lg">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

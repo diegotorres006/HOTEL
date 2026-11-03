@@ -1,0 +1,26 @@
+{
+  "name": "hotel-norte-pms",
+  "version": "2.0.0-beta",
+  "description": "Sistema Integral de Gestión Hotelera (PMS) para Hotel Norte — Módulos desacoplados, Cajas duales, Ventas de Bar, Multi-alquiler diario y sincronización con Booking.com",
+  "main": "server_booking_bridge.js",
+  "scripts": {
+    "start": "node server_booking_bridge.js",
+    "test": "node scripts/test_pms_suite.js",
+    "build:templates": "node scripts/compile-templates.js"
+  },
+  "keywords": [
+    "pms",
+    "hotel-management",
+    "booking-sync",
+    "cashbox-management",
+    "hotel-norte"
+  ],
+  "author": "Hotel Norte Development Team",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pasantecinco/HOTEL-NORTE.git"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

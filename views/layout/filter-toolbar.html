@@ -1,0 +1,75 @@
+<!-- COMPONENTE: Barra de Filtros Triple (Estado, Piso y Tipo/Personas) y Selector de Vista (views/layout/filter-toolbar.html) -->
+<section class="bg-white border-b border-slate-200 px-5 py-2.5 space-y-2">
+  <!-- Fila 1: Filtro por Estado + Selector de Modo de Vista -->
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-1.5 flex-wrap text-xs">
+      <span class="text-slate-400 font-bold uppercase text-[10px] tracking-wider mr-1">Estado:</span>
+      <button onclick="filtrar('todas')" id="f-todas" class="px-2.5 py-1 rounded-md bg-blue-800 text-white border border-blue-600 font-semibold">Todas (<span id="count-todas">35</span>)</button>
+      <button onclick="filtrar('pendientes')" id="f-pendientes" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+        Verificar 12:00 (<span id="count-pendientes">0</span>)
+      </button>
+      <button onclick="filtrar('ocupadas')" id="f-ocupadas" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium">Ocupadas (<span id="count-ocupadas">0</span>)</button>
+      <button onclick="filtrar('reservadas')" id="f-reservadas" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium">
+        Reservadas (<span id="count-reservadas">0</span>)
+      </button>
+      <button onclick="filtrar('libres')" id="f-libres" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium">Disponibles (<span id="count-libres">0</span>)</button>
+      <button onclick="filtrar('debito')" id="f-debito" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+        Pendiente de Pago (<span id="count-debito">0</span>)
+      </button>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <!-- Leyenda sobria y clara -->
+      <div id="leyenda-plano" class="hidden xl:flex items-center gap-3 text-[11px] text-slate-400">
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-sky-500"></span> Disponible</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-blue-600"></span> Ocupada (Check-in)</div>
+        <div id="leyenda-item-reservada" class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-purple-500 border border-purple-400"></span> Pre-Asignada (Reserva)</div>
+        <div id="leyenda-item-12pm" class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-amber-500"></span> Verificar 12:00</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-amber-400"></span> Pendiente de Pago</div>
+      </div>
+
+      <!-- Selector de Modo de Vista -->
+      <div class="flex items-center bg-slate-100 border border-slate-300 p-0.5 rounded-lg text-xs font-semibold">
+        <button id="btn-vista-rack" onclick="cambiarModoVista('rack')" class="px-3 py-1 rounded-md bg-slate-900 text-white flex items-center gap-1.5 shadow-2xs transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          Panel de Habitaciones
+        </button>
+        <button id="btn-vista-hoja" onclick="cambiarModoVista('hoja')" class="px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          Planilla de Registro
+        </button>
+        <button id="btn-vista-bar" onclick="cambiarModoVista('bar')" class="px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          Ventas del Bar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fila 2: Filtro por Piso + Filtro por Capacidad / Tipo de Habitación -->
+  <div class="flex flex-wrap items-center justify-between gap-3 pt-1.5 border-t border-slate-200/70 text-xs">
+    <!-- Filtros de Pisos Oficiales Hotel Norte -->
+    <div class="flex items-center gap-1.5 flex-wrap">
+      <span class="text-slate-400 font-bold uppercase text-[10px] tracking-wider mr-1">Piso:</span>
+      <button onclick="filtrarPiso('todos')" id="fp-todos" class="px-2.5 py-1 rounded-md bg-slate-900 text-white font-semibold text-xs transition shadow-2xs">Todos (35)</button>
+      <button onclick="filtrarPiso('pb')" id="fp-pb" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">Planta Baja (6)</button>
+      <button onclick="filtrarPiso('piso1')" id="fp-piso1" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">1° Piso (15)</button>
+      <button onclick="filtrarPiso('piso2')" id="fp-piso2" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">2° Piso (11)</button>
+      <button onclick="filtrarPiso('piso3')" id="fp-piso3" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">3° Piso (3)</button>
+    </div>
+
+    <!-- Filtros por Tipo de Habitación y Capacidad de Personas -->
+    <div class="flex items-center gap-1.5 flex-wrap">
+      <span class="text-slate-400 font-bold uppercase text-[10px] tracking-wider mr-1">Tipo / Personas:</span>
+      <button onclick="filtrarTipo('todos')" id="ft-todos" class="px-2.5 py-1 rounded-md bg-blue-800 text-white font-semibold text-xs transition shadow-2xs">Todos (35)</button>
+      <button onclick="filtrarTipo('individual')" id="ft-individual" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">Individual · 1 Pers. (2)</button>
+      <button onclick="filtrarTipo('matrimonial')" id="ft-matrimonial" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">Matrimonial · 2 Pers. (14)</button>
+      <button onclick="filtrarTipo('doble')" id="ft-doble" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">Doble Twin · 2 Pers. (1)</button>
+      <button onclick="filtrarTipo('triple')" id="ft-triple" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">Triple · 3 Pers. (9)</button>
+      <button onclick="filtrarTipo('cuadruple')" id="ft-cuadruple" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">Cuádruple · 4 Pers. (4)</button>
+      <button onclick="filtrarTipo('quintuple')" id="ft-quintuple" class="px-2.5 py-1 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">Quíntuple · 5 Pers. (5)</button>
+    </div>
+  </div>
+</section>

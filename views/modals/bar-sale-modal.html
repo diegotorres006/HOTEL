@@ -1,0 +1,136 @@
+<!-- COMPONENTE MODAL: Venta Rápida de Bar, Cafetería y Frigobar (views/modals/bar-sale-modal.html) -->
+<div id="modal-venta-bar" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-white border border-slate-300 w-full max-w-lg rounded-xl shadow-2xl overflow-hidden modal-animate-in flex flex-col max-h-[92vh]">
+
+    <!-- Cabecera -->
+    <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded bg-blue-700 flex items-center justify-center font-bold text-base text-white select-none">
+          +
+        </div>
+        <div>
+          <h3 class="font-bold text-white text-sm uppercase tracking-wide">Registrar Venta de Bar / Frigobar</h3>
+          <p class="text-[11px] text-slate-300">Recepción · Precios fijos autorizados</p>
+        </div>
+      </div>
+      <button onclick="cerrarModalVentaRapida()" class="text-slate-400 hover:text-white p-1 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Cuerpo -->
+    <div class="p-6 space-y-4 overflow-y-auto flex-1 text-xs text-slate-700">
+
+      <!-- Ficha de Producto Seleccionado (Solo Lectura) -->
+      <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-lg">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <span id="mv-prod-codigo" class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block"></span>
+            <strong id="mv-prod-nombre" class="text-slate-900 font-bold text-sm block mt-0.5"></strong>
+            <span id="mv-prod-categoria" class="text-[11px] text-slate-500 font-medium"></span>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Precio Unitario</span>
+            <strong id="mv-prod-precio" class="text-base font-bold font-mono text-emerald-600 block"></strong>
+            <span id="mv-prod-stock" class="text-[10px] text-slate-500 font-medium"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selector de Cantidad con botones +/- -->
+      <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-lg flex items-center justify-between">
+        <div>
+          <label class="block font-bold text-slate-700 uppercase text-[10px]">Cantidad a Vender</label>
+          <span class="text-[11px] text-slate-500">Unidades a descontar de stock</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="cambiarCantidadVenta(-1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 font-bold text-base text-slate-700 flex items-center justify-center transition select-none">−</button>
+          <input type="number" id="mv-cantidad" value="1" min="1" oninput="recalcularSubtotalVenta()"
+            class="w-14 bg-white border border-slate-300 rounded-lg py-1.5 text-center font-mono font-bold text-slate-900 text-sm focus:outline-none focus:border-blue-600">
+          <button type="button" onclick="cambiarCantidadVenta(1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 font-bold text-base text-slate-700 flex items-center justify-center transition select-none">+</button>
+        </div>
+      </div>
+
+      <!-- Destino de la Venta (Habitación o Barra) -->
+      <div class="space-y-2">
+        <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider">¿A dónde se entrega el consumo?</label>
+        <div class="grid grid-cols-2 gap-2">
+          <label class="border border-slate-200 rounded-lg p-2.5 flex items-center gap-2 cursor-pointer hover:bg-slate-50 has-checked:bg-blue-950/20 has-checked:border-blue-600">
+            <input type="radio" name="mv-destino" id="mv-dest-hab" value="habitacion" checked onchange="cambiarDestinoVenta('habitacion')" class="text-blue-600">
+            <div>
+              <strong class="text-slate-900 block text-xs">Cargar a Habitación</strong>
+              <span class="text-[10px] text-slate-500">Huésped alojado</span>
+            </div>
+          </label>
+          <label class="border border-slate-200 rounded-lg p-2.5 flex items-center gap-2 cursor-pointer hover:bg-slate-50 has-checked:bg-blue-950/20 has-checked:border-blue-600">
+            <input type="radio" name="mv-destino" id="mv-dest-barra" value="barra" onchange="cambiarDestinoVenta('barra')" class="text-blue-600">
+            <div>
+              <strong class="text-slate-900 block text-xs">Venta en Barra</strong>
+              <span class="text-[10px] text-slate-500">Consumo directo</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Combobox de Habitación (visible solo si destino = habitacion) -->
+      <div id="mv-bloque-habitacion" class="space-y-1">
+        <label class="block font-bold text-slate-700 uppercase text-[10px]">Seleccione la Habitación Alojada *</label>
+        <select id="mv-select-habitacion" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold text-slate-900 focus:outline-none focus:border-blue-700">
+          <!-- Opciones dinámicas de habitaciones ocupadas -->
+        </select>
+      </div>
+
+      <!-- Estado de Cobro -->
+      <div class="space-y-2 pt-2 border-t border-slate-200">
+        <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider">Forma de Liquidación y Cobro</label>
+        <div class="space-y-1.5">
+          <label class="border border-slate-200 rounded-lg p-2.5 flex items-center gap-2.5 cursor-pointer hover:bg-slate-50 has-checked:bg-amber-950/20 has-checked:border-amber-600">
+            <input type="radio" name="mv-pago" id="mv-pago-cuenta" value="pendiente" checked onchange="cambiarEstadoCobroVenta('pendiente')" class="text-amber-600">
+            <div>
+              <strong class="text-slate-900 block text-xs">Pendiente de Cobro (Cargar a Cuenta de Habitación)</strong>
+              <span class="text-[10px] text-slate-500">Aumentará el saldo deudor de la habitación para ser cobrado al Check-out</span>
+            </div>
+          </label>
+          <label class="border border-slate-200 rounded-lg p-2.5 flex items-center gap-2.5 cursor-pointer hover:bg-slate-50 has-checked:bg-emerald-950/20 has-checked:border-emerald-600">
+            <input type="radio" name="mv-pago" id="mv-pago-inmediato" value="pagado" onchange="cambiarEstadoCobroVenta('pagado')" class="text-emerald-600">
+            <div>
+              <strong class="text-slate-900 block text-xs">Cobrado de Inmediato (Asentar en Caja del Turno)</strong>
+              <span class="text-[10px] text-slate-500">El huésped o cliente abona en el acto</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Selector de Método de Pago si es cobrado de inmediato -->
+      <div id="mv-bloque-metodo-pago" class="hidden space-y-1 bg-slate-50 p-3 rounded-lg border border-slate-200">
+        <label class="block font-bold text-slate-700 uppercase text-[10px]">Método de Pago Recibido:</label>
+        <select id="mv-metodo-pago" class="w-full bg-white border border-slate-300 rounded-md p-1.5 text-xs text-slate-900 font-semibold">
+          <option value="Efectivo">Efectivo en Caja</option>
+          <option value="Transferencia">Transferencia Bancaria</option>
+          <option value="Datáfono">Tarjeta / Datáfono</option>
+        </select>
+      </div>
+
+      <!-- Subtotal y Confirmación -->
+      <div class="bg-slate-900 text-white p-4 rounded-xl flex items-center justify-between mt-3">
+        <div>
+          <span class="text-[10px] uppercase font-bold text-slate-400 block">Total a Registrar:</span>
+          <span class="text-[11px] text-slate-300">Precio unitario fijo</span>
+        </div>
+        <strong id="mv-subtotal" class="font-mono text-xl font-bold text-emerald-400">$0.00</strong>
+      </div>
+    </div>
+
+    <!-- Pie con Botones de Acción -->
+    <div class="bg-slate-50 px-6 py-3.5 border-t border-slate-200 flex items-center justify-end gap-2.5">
+      <button type="button" onclick="cerrarModalVentaRapida()" class="px-4 py-2 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-semibold transition">
+        Cancelar
+      </button>
+      <button type="button" onclick="confirmarVentaRapida()" class="px-5 py-2 rounded-lg bg-blue-700 hover:bg-blue-600 active:scale-98 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        Confirmar Venta
+      </button>
+    </div>
+
+  </div>
+</div>

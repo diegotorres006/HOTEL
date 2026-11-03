@@ -1,0 +1,93 @@
+/* ==========================================================================
+   HOTEL NORTE — TEMA CORPORATIVO AZUL MARINO / PIZARRA (DESCANSO VISUAL)
+   Archivo: assets/css/theme.css
+   ========================================================================== */
+
+:root {
+  --hn-bg-body: #0b1324;
+  --hn-bg-surface: #132038;
+  --hn-bg-subtle: #0f1a2e;
+  --hn-bg-elevated: #172742;
+  --hn-bg-input: #0d182b;
+  --hn-border-primary: #243859;
+  --hn-border-input: #284066;
+  --hn-accent-blue: #3b82f6;
+  --hn-text-primary: #f1f5f9;
+  --hn-text-secondary: #cbd5e1;
+  --hn-text-muted: #94a3b8;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--hn-bg-body);
+}
+::-webkit-scrollbar-thumb {
+  background: #263b5e;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3b5988;
+}
+
+body {
+  background-color: var(--hn-bg-body) !important;
+  color: #dbeafe !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Adaptación de superficies a gama azul corporativa descansada */
+.bg-white {
+  background-color: var(--hn-bg-surface) !important;
+  color: #e2e8f0 !important;
+}
+.bg-slate-50 {
+  background-color: var(--hn-bg-subtle) !important;
+  color: var(--hn-text-secondary) !important;
+}
+.bg-slate-100 {
+  background-color: var(--hn-bg-elevated) !important;
+  color: #dbeafe !important;
+}
+.bg-slate-200\/70 {
+  background-color: #101e36 !important;
+  color: #93c5fd !important;
+}
+.border-slate-200,
+.border-slate-300,
+.border-slate-100 {
+  border-color: var(--hn-border-primary) !important;
+}
+.text-slate-900,
+.text-slate-800 {
+  color: var(--hn-text-primary) !important;
+}
+.text-slate-700,
+.text-slate-600 {
+  color: var(--hn-text-muted) !important;
+}
+.text-slate-500,
+.text-slate-400 {
+  color: #64748b !important;
+}
+
+/* Controles de formulario */
+input,
+select,
+textarea {
+  background-color: var(--hn-bg-input) !important;
+  color: var(--hn-text-primary) !important;
+  border-color: var(--hn-border-input) !important;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #475569 !important;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--hn-accent-blue) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}

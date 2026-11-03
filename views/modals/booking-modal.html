@@ -1,0 +1,73 @@
+<!-- COMPONENTE MODAL: Reservas Booking.com (views/modals/booking-modal.html) -->
+<div id="modal-booking" class="fixed inset-0 z-[92] bg-slate-950/75 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-white border border-slate-300 w-full max-w-5xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-xs modal-animate-in">
+    <!-- Cabecera -->
+    <div class="bg-slate-900 px-6 py-4 flex flex-wrap justify-between items-center gap-3 text-white border-b border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded bg-sky-900/80 border border-sky-600 flex items-center justify-center font-bold text-sky-200 font-mono text-sm">
+          B.
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h3 class="font-bold text-white text-sm uppercase tracking-wide">Bandeja de Reservas Booking.com — Hotel Norte (ID: 2862226)</h3>
+            <span id="booking-live-status-badge" class="bg-emerald-950 text-emerald-300 border border-emerald-700 text-[10px] font-semibold px-2 py-0.5 rounded flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Sincronización Automática Activa
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400">
+            Sincronización en segundo plano · Pre-asigne habitaciones tentativas y realice el Check-in al recibir al huésped
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="forzarSincronizacionPuenteBooking(true)" class="bg-sky-800 hover:bg-sky-700 text-white font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5" title="Actualizar datos desde Booking">
+          <svg class="w-3.5 h-3.5 text-sky-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          Sincronizar Ahora
+        </button>
+        <button onclick="cerrarModalBooking()" class="text-slate-400 hover:text-white p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Contenido: Bandeja de Reservas y Asignación de Habitación Directa -->
+    <div class="p-6 flex-1 overflow-y-auto space-y-4">
+      <!-- Filtros de Pestañas y Búsqueda -->
+      <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-1.5">
+          <button onclick="filtrarBandejaBooking('confirmadas')" id="tab-bk-confirmadas" class="px-3 py-1.5 rounded-md bg-blue-900 text-white font-semibold text-xs transition shadow-2xs">
+            Confirmadas Vigentes (<span id="count-bk-vigentes">0</span>)
+          </button>
+          <button onclick="filtrarBandejaBooking('canceladas')" id="tab-bk-canceladas" class="px-3 py-1.5 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">
+            Canceladas (<span id="count-bk-canceladas">0</span>)
+          </button>
+          <button onclick="filtrarBandejaBooking('pasadas')" id="tab-bk-pasadas" class="px-3 py-1.5 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">
+            Histórico / Pasadas (<span id="count-bk-pasadas">0</span>)
+          </button>
+          <button onclick="filtrarBandejaBooking('todas')" id="tab-bk-todas" class="px-3 py-1.5 rounded-md bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-medium text-xs transition">
+            Todas (<span id="count-bk-todas">0</span>)
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2 flex-1 max-w-xs">
+          <input type="text" id="busqueda-booking-input" oninput="buscarReservaBookingEnBandeja(this.value)"
+            placeholder="Buscar por huésped o # de reserva..."
+            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-700">
+        </div>
+      </div>
+
+      <!-- Resumen explicativo de Pre-asignación vs Check-in -->
+      <div class="bg-indigo-950/40 border border-indigo-800/60 rounded-lg px-4 py-2.5 text-[11px] text-indigo-200 flex items-center justify-between flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+          <span><strong>Pre-asignación vs. Check-in:</strong> Puede asignar o reasignar la habitación tentativa desde el menú desplegable en cualquier momento. El <strong>Check-in</strong> oficial se realiza pulsando "Recibir Huésped (Check-in)" cuando el cliente se presenta en recepción.</span>
+        </div>
+        <span id="booking-count-summary" class="font-mono font-bold text-indigo-300"></span>
+      </div>
+
+      <!-- Lista de Tarjetas de Reservas -->
+      <div id="booking-lista-reservas" class="space-y-2.5"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,164 @@
+[
+  {
+    "id": 1,
+    "codigo": "BAR-001",
+    "nombre": "Agua Sin Gas (500ml)",
+    "categoria": "Bebidas Frías",
+    "precio": 1,
+    "stock": 42,
+    "icon": "💧"
+  },
+  {
+    "id": 2,
+    "codigo": "BAR-002",
+    "nombre": "Agua Güitig con Gas (500ml)",
+    "categoria": "Bebidas Frías",
+    "precio": 1.5,
+    "stock": 35,
+    "icon": "🫧"
+  },
+  {
+    "id": 3,
+    "codigo": "BAR-003",
+    "nombre": "Coca Cola Regular (350ml)",
+    "categoria": "Bebidas Frías",
+    "precio": 1.5,
+    "stock": 29,
+    "icon": "🥤"
+  },
+  {
+    "id": 4,
+    "codigo": "BAR-004",
+    "nombre": "Coca Cola Sin Azúcar (350ml)",
+    "categoria": "Bebidas Frías",
+    "precio": 1.5,
+    "stock": 25,
+    "icon": "🥤"
+  },
+  {
+    "id": 5,
+    "codigo": "BAR-005",
+    "nombre": "Sprite / Fanta (350ml)",
+    "categoria": "Bebidas Frías",
+    "precio": 1.5,
+    "stock": 20,
+    "icon": "🥤"
+  },
+  {
+    "id": 6,
+    "codigo": "BAR-006",
+    "nombre": "Cerveza Club Premium (330ml)",
+    "categoria": "Cervezas y Licores",
+    "precio": 2.5,
+    "stock": 28,
+    "icon": "🍺"
+  },
+  {
+    "id": 7,
+    "codigo": "BAR-007",
+    "nombre": "Cerveza Pilsener (330ml)",
+    "categoria": "Cervezas y Licores",
+    "precio": 2.25,
+    "stock": 32,
+    "icon": "🍺"
+  },
+  {
+    "id": 8,
+    "codigo": "BAR-008",
+    "nombre": "Cerveza Corona Extra (355ml)",
+    "categoria": "Cervezas y Licores",
+    "precio": 3.5,
+    "stock": 18,
+    "icon": "🍻"
+  },
+  {
+    "id": 9,
+    "codigo": "BAR-009",
+    "nombre": "Gatorade Frutas / Mora (500ml)",
+    "categoria": "Bebidas Frías",
+    "precio": 2,
+    "stock": 20,
+    "icon": "⚡"
+  },
+  {
+    "id": 10,
+    "codigo": "BAR-010",
+    "nombre": "Red Bull Energy Drink (250ml)",
+    "categoria": "Bebidas Frías",
+    "precio": 3.5,
+    "stock": 15,
+    "icon": "⚡"
+  },
+  {
+    "id": 11,
+    "codigo": "BAR-011",
+    "nombre": "Café Americano Pasado",
+    "categoria": "Cafetería y Calientes",
+    "precio": 1.5,
+    "stock": 50,
+    "icon": "☕"
+  },
+  {
+    "id": 12,
+    "codigo": "BAR-012",
+    "nombre": "Café con Leche / Capuchino",
+    "categoria": "Cafetería y Calientes",
+    "precio": 2,
+    "stock": 40,
+    "icon": "☕"
+  },
+  {
+    "id": 13,
+    "codigo": "BAR-013",
+    "nombre": "Té Aromático / Manzanilla",
+    "categoria": "Cafetería y Calientes",
+    "precio": 1.25,
+    "stock": 30,
+    "icon": "🫖"
+  },
+  {
+    "id": 14,
+    "codigo": "BAR-014",
+    "nombre": "Sandwich Mixto Caliente",
+    "categoria": "Cafetería y Calientes",
+    "precio": 3,
+    "stock": 15,
+    "icon": "🥪"
+  },
+  {
+    "id": 15,
+    "codigo": "BAR-015",
+    "nombre": "Papas Ruffles / Lays",
+    "categoria": "Snacks y Golosinas",
+    "precio": 1.25,
+    "stock": 25,
+    "icon": "🥔"
+  },
+  {
+    "id": 16,
+    "codigo": "BAR-016",
+    "nombre": "Doritos Queso Atrevido",
+    "categoria": "Snacks y Golosinas",
+    "precio": 1.25,
+    "stock": 20,
+    "icon": "🧀"
+  },
+  {
+    "id": 17,
+    "codigo": "BAR-017",
+    "nombre": "Chocolates Manicho / Galak",
+    "categoria": "Snacks y Golosinas",
+    "precio": 1,
+    "stock": 30,
+    "icon": "🍫"
+  },
+  {
+    "id": 18,
+    "codigo": "BAR-018",
+    "nombre": "Galletas Oreo Original",
+    "categoria": "Snacks y Golosinas",
+    "precio": 1,
+    "stock": 25,
+    "icon": "🍪"
+  }
+]

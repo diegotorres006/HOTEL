@@ -1,0 +1,35 @@
+{
+  "idTurno": "TUR-541470",
+  "empleado": {
+    "id": 1,
+    "nombre": "Wilson Paredes",
+    "cargo": "Recepcionista",
+    "pin": "1234",
+    "turno": "Mañana (08:00 – 17:00)",
+    "color": "bg-slate-800"
+  },
+  "turno": "Mañana (08:00 – 17:00)",
+  "horaInicio": "2026-10-21T18:32:21.470Z",
+  "registros": [
+    {
+      "tipo": "APERTURA DE TURNO",
+      "descripcion": "Wilson Paredes inició sesión en Mañana (08:00 – 17:00) · Fondo Hospedaje: $200.00 · Fondo Bar: $50.00",
+      "hab": null,
+      "hora": "2026-10-21T18:32:21.470Z",
+      "empleado": "Wilson Paredes"
+    }
+  ],
+  "fondoInicialHospedaje": 200,
+  "recaudadoEfectivoHospedaje": 70,
+  "recaudadoTransferenciaHospedaje": 0,
+  "recaudadoDatafonoHospedaje": 0,
+  "fondoInicialBar": 50,
+  "recaudadoEfectivoBar": 5,
+  "recaudadoTransferenciaBar": 0,
+  "recaudadoDatafonoBar": 0,
+  "totalPagado": 75,
+  "totalEfectivo": 75,
+  "totalTransferencia": 0,
+  "totalDatafono": 0,
+  "totalDebito": 0
+}

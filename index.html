@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Norte — Sistema Administrativo de Recepción y Facturación</title>
+
+  <!-- Framework de Utilidades Visuales -->
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+
+  <!-- Hojas de Estilo Modulares por Responsabilidad -->
+  <link rel="stylesheet" href="./assets/css/theme.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/tables.css">
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-slate-800 selection:text-white">
+
+  <!-- 1. Componente Modal de Autenticación de Personal (views/modals/login-modal.html) -->
+  <div id="mount-login-modal"></div>
+
+  <!-- 2. Estructura Principal de la Aplicación -->
+  <div id="app-principal" class="flex flex-col min-h-screen">
+    <!-- Barra Superior Ejecutiva (views/layout/header.html) -->
+    <div id="mount-header"></div>
+
+    <!-- Navegación de Fechas y Estado del Día (views/layout/date-bar.html) -->
+    <div id="mount-date-bar"></div>
+
+    <!-- Barra de Filtros y Selector de Vista (views/layout/filter-toolbar.html) -->
+    <div id="mount-filter-toolbar"></div>
+
+    <!-- Área de Trabajo: Rack Oficial de 35 Habitaciones, Planilla Contable y Bar -->
+    <div id="mount-main-workspace" class="flex-1 flex flex-col"></div>
+  </div>
+
+  <!-- 3. Contenedor de Modales Operativos y Notificaciones (views/modals/*.html) -->
+  <div id="mount-modals"></div>
+
+  <!-- ==================================================================== -->
+  <!-- ARQUITECTURA MODULAR JAVASCRIPT (CARGA POR CAPAS DE RESPONSABILIDAD) -->
+  <!-- ==================================================================== -->
+
+  <!-- Capa 1: Configuración y Constantes -->
+  <script src="./src/config/constants.js"></script>
+
+  <!-- Capa 2: Utilidades, Persistencia y Validaciones -->
+  <script src="./src/utils/formatters.js"></script>
+  <script src="./src/utils/storage.js"></script>
+  <script src="./src/utils/validators.js"></script>
+
+  <!-- Capa 3: Estado Global (Store) -->
+  <script src="./src/state/store.js"></script>
+
+  <!-- Capa 4: Componentes de Interfaz Reutilizables -->
+  <script src="./src/components/ComponentLoader.js"></script>
+  <script src="./src/components/UIModal.js"></script>
+  <script src="./src/components/RoomRackView.js"></script>
+  <script src="./src/components/RoomTableView.js"></script>
+
+  <!-- Capa 5: Módulos de Dominio de Negocio -->
+  <!-- 5.1 Control de Turnos y Cajas Duales ($200 Hospedaje / $50 Bar) -->
+  <script src="./src/modules/shifts/cashbox-service.js"></script>
+  <script src="./src/modules/shifts/auth-login.js"></script>
+  <script src="./src/modules/shifts/shift-service.js"></script>
+  <script src="./src/modules/shifts/shift-close.js"></script>
+  <script src="./src/modules/shifts/shift-history.js"></script>
+
+  <!-- 5.2 Habitaciones, Check-in, Check-out y Reservas Multi-Estancia -->
+  <script src="./src/modules/rooms/rooms-navigation.js"></script>
+  <script src="./src/modules/rooms/checkin-service.js"></script>
+  <script src="./src/modules/rooms/room-detail.js"></script>
+  <script src="./src/modules/rooms/reservations.js"></script>
+  <script src="./src/modules/rooms/checkout-service.js"></script>
+
+  <!-- 5.3 Facturación Electrónica SRI (D2Fac RUC: 0301752861001) -->
+  <script src="./src/modules/billing/d2fac-client.js"></script>
+  <script src="./src/modules/billing/d2fac-modal.js"></script>
+
+  <!-- 5.4 Sincronización en Tiempo Real Booking.com (ID: 2862226) -->
+  <script src="./src/modules/booking/booking-sync-api.js"></script>
+  <script src="./src/modules/booking/booking-modal-ui.js"></script>
+
+  <!-- 5.5 Gestión y Ventas del Bar / Cafetería -->
+  <script src="./src/modules/bar/bar-catalog.js"></script>
+  <script src="./src/modules/bar/bar-sales.js"></script>
+
+  <!-- 5.6 Panel de Administración y Gerencia (Stock, Personal, Habitaciones, Cajas) -->
+  <script src="./src/modules/admin/admin-core.js"></script>
+  <script src="./src/modules/admin/admin-inventory.js"></script>
+  <script src="./src/modules/admin/admin-employees.js"></script>
+  <script src="./src/modules/admin/admin-analytics.js"></script>
+  <script src="./src/modules/admin/admin-rooms.js"></script>
+  <script src="./src/modules/admin/admin-cashboxes.js"></script>
+
+  <!-- Capa 6: Inicializador Principal de la Aplicación -->
+  <script src="./src/modules/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+/* ==========================================================================
+   HOTEL NORTE — ESTILOS DE PLANILLA DE REGISTRO E IMPRESIÓN
+   Archivo: assets/css/tables.css
+   Optimizado para monitores 2K (2560x1440) de 32" y distribución completa
+   ========================================================================== */
+
+.sheet-table-container {
+  overflow-x: auto;
+  background: #132038;
+  border: 1px solid #243859;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(5, 10, 24, 0.4);
+  width: 100%;
+}
+.sheet-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.sheet-table th {
+  padding: 8px 10px;
+  border: 1px solid #243859;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 11px;
+  background: #0f1a2e;
+  color: #93c5fd;
+  white-space: nowrap;
+}
+.sheet-table td {
+  padding: 7px 10px;
+  border: 1px solid #1e3150;
+  color: #dbeafe;
+}
+.sheet-table tbody tr:hover {
+  background-color: #1c2f52 !important;
+  cursor: pointer;
+}
+.sheet-table tr.row-ocupada {
+  background-color: #162947;
+}
+.sheet-table tr.row-reservada {
+  background-color: #182246;
+}
+.sheet-table tr.row-debito {
+  background-color: #241d14;
+  border-left: 3px solid #f59e0b;
+}
+.sheet-table tr.row-debito:hover {
+  background-color: #312616 !important;
+}
+
+/* Escalado fino para pantallas 2K (2560px / 32 pulgadas) */
+@media (min-width: 1920px) {
+  .sheet-table {
+    font-size: 12.5px;
+  }
+  .sheet-table th {
+    padding: 9px 12px;
+    font-size: 11px;
+  }
+  .sheet-table td {
+    padding: 8px 12px;
+  }
+}
+
+@media print {
+  header,
+  section,
+  #barra-fechas,
+  #banner-contextual-dia {
+    display: none !important;
+  }
+  #contenedor-tabla-registro {
+    display: block !important;
+  }
+  #grid-habitaciones {
+    display: none !important;
+  }
+}

@@ -1,0 +1,453 @@
+<!-- COMPONENTE MODAL: Panel de Administración y Control Gerencial (views/modals/admin-panel-modal.html) -->
+<div id="modal-admin-panel" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xs hidden flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-6xl rounded-2xl shadow-2xl overflow-hidden modal-animate-in flex flex-col my-auto max-h-[94vh]">
+
+    <!-- Cabecera Ejecutiva Gerencial -->
+    <div class="bg-slate-950 px-6 py-4 flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 text-white shrink-0">
+      <div class="flex items-center gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-purple-900 border border-purple-600 flex items-center justify-center font-bold text-sm tracking-wider text-purple-200 select-none shadow-xs">
+          HN
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="font-bold text-base tracking-wide uppercase text-white">Panel de Administración y Gerencia</h2>
+            <span class="bg-purple-950 text-purple-300 border border-purple-800 text-[10px] font-mono font-bold px-2 py-0.5 rounded">Acceso Total</span>
+          </div>
+          <p class="text-xs text-slate-400">Hotel Norte · Control de Inventario, Nómina, Horarios, Habitaciones y Cajas</p>
+        </div>
+      </div>
+
+      <!-- Conmutador de Pestañas de Gestión -->
+      <div class="flex items-center gap-1.5 bg-slate-900/90 border border-slate-800 p-1 rounded-xl flex-wrap">
+        <button id="tab-btn-inventario" onclick="cambiarTabAdmin('inventario')" class="px-3.5 py-1.5 font-bold text-xs rounded-lg bg-purple-900 text-purple-100 border border-purple-600 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          Stock & Bar
+        </button>
+        <button id="tab-btn-empleados" onclick="cambiarTabAdmin('empleados')" class="px-3.5 py-1.5 font-medium text-xs rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          Personal & Horarios
+        </button>
+        <button id="tab-btn-resumen" onclick="cambiarTabAdmin('resumen')" class="px-3.5 py-1.5 font-medium text-xs rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          Resumen de Empleados
+        </button>
+        <button id="tab-btn-habitaciones" onclick="cambiarTabAdmin('habitaciones')" class="px-3.5 py-1.5 font-medium text-xs rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Habitaciones
+        </button>
+        <button id="tab-btn-cajas" onclick="cambiarTabAdmin('cajas')" class="px-3.5 py-1.5 font-medium text-xs rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Cajas & Fondos Fijos
+        </button>
+      </div>
+
+      <button onclick="cerrarModalAdmin()" class="text-slate-400 hover:text-white p-1 transition" title="Cerrar panel">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Contenido Modular por Pestañas -->
+    <div class="p-6 overflow-y-auto flex-1 space-y-5 bg-slate-900/60 text-slate-300">
+
+      <!-- ==================================================================== -->
+      <!-- PESTAÑA 1: GESTIÓN DE STOCK & INVENTARIO DEL BAR                     -->
+      <!-- ==================================================================== -->
+      <div id="admin-content-inventario" class="space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+          <div>
+            <h3 class="text-sm font-bold text-white uppercase tracking-wide">Inventario General de Bar, Cafetería y Frigobar</h3>
+            <p class="text-xs text-slate-400">Modifique el stock disponible en tiempo real o ajuste precios de venta al público.</p>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <input type="text" id="busq-admin-bar" oninput="renderAdminInventario()" placeholder="Buscar producto o código..."
+              class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500">
+            <button onclick="abrirModalNuevoProducto()" class="bg-purple-800 hover:bg-purple-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-xs">
+              <span class="text-sm font-black">+</span> Nuevo Producto
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900">
+          <table class="w-full border-collapse text-left">
+            <thead>
+              <tr class="bg-slate-950 text-slate-400 text-[10px] font-bold uppercase tracking-wider border-b border-slate-800">
+                <th class="py-3 px-3">CÓDIGO</th>
+                <th class="py-3 px-3">PRODUCTO</th>
+                <th class="py-3 px-3">CATEGORÍA</th>
+                <th class="py-3 px-3 text-right">PRECIO VENTA</th>
+                <th class="py-3 px-3 text-center">AJUSTE RÁPIDO DE STOCK</th>
+                <th class="py-3 px-3 text-center">ESTADO</th>
+                <th class="py-3 px-3 text-right">ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-admin-inventario">
+              <!-- Filas dinámicas -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==================================================================== -->
+      <!-- PESTAÑA 2: PERSONAL, NÓMINA Y ASIGNACIÓN DE HORARIOS                 -->
+      <!-- ==================================================================== -->
+      <div id="admin-content-empleados" class="hidden space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+          <div>
+            <h3 class="text-sm font-bold text-white uppercase tracking-wide">Nómina de Personal y Asignación de Horarios</h3>
+            <p class="text-xs text-slate-400">Asigne el turno correspondiente a cada recepcionista, cree nuevos colaboradores o elimínelos.</p>
+          </div>
+          <button onclick="abrirModalNuevoEmpleado()" class="bg-purple-800 hover:bg-purple-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-xs">
+            <span class="text-sm font-black">+</span> Agregar Colaborador
+          </button>
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900">
+          <table class="w-full border-collapse text-left">
+            <thead>
+              <tr class="bg-slate-950 text-slate-400 text-[10px] font-bold uppercase tracking-wider border-b border-slate-800">
+                <th class="py-3 px-3">COLABORADOR / CARGO</th>
+                <th class="py-3 px-3">HORARIO / TURNO ASIGNADO</th>
+                <th class="py-3 px-3 text-center">CLAVE PIN</th>
+                <th class="py-3 px-3 text-right">ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-admin-empleados">
+              <!-- Filas dinámicas -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==================================================================== -->
+      <!-- PESTAÑA 3: RESUMEN Y AUDITORÍA POR CADA EMPLEADO                     -->
+      <!-- ==================================================================== -->
+      <div id="admin-content-resumen" class="hidden space-y-4">
+        <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h3 class="text-sm font-bold text-white uppercase tracking-wide">Auditoría Individual y Rendimiento de Recepción</h3>
+            <p class="text-xs text-slate-400">Seleccione un colaborador para consultar el desglose de su gestión histórica.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-400 uppercase">Colaborador:</span>
+            <select id="select-resumen-empleado" onchange="cargarDetalleResumenEmpleado(this.value)"
+              class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white font-semibold focus:outline-none focus:border-purple-500">
+              <!-- Opciones dinámicas -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Tarjetas de Métricas del Empleado Seleccionado -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          <div class="bg-slate-800/90 border border-slate-700 p-3.5 rounded-xl">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Turnos Cerrados</span>
+            <strong id="re-total-turnos" class="font-mono text-xl font-bold text-white block mt-1">0</strong>
+            <span class="text-[10px] text-slate-500">Con arqueo final</span>
+          </div>
+          <div class="bg-slate-800/90 border border-slate-700 p-3.5 rounded-xl">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Total Recaudado</span>
+            <strong id="re-total-recaudado" class="font-mono text-xl font-bold text-emerald-400 block mt-1">$0.00</strong>
+            <span class="text-[10px] text-slate-500">Cobros asentados</span>
+          </div>
+          <div class="bg-slate-800/90 border border-slate-700 p-3.5 rounded-xl">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Check-ins Realizados</span>
+            <strong id="re-total-checkins" class="font-mono text-xl font-bold text-sky-400 block mt-1">0</strong>
+            <span class="text-[10px] text-slate-500">Huéspedes ingresados</span>
+          </div>
+          <div class="bg-slate-800/90 border border-slate-700 p-3.5 rounded-xl">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Ventas del Bar</span>
+            <strong id="re-total-ventas-bar" class="font-mono text-xl font-bold text-purple-300 block mt-1">$0.00</strong>
+            <span class="text-[10px] text-slate-500">Consumos registrados</span>
+          </div>
+          <div class="bg-slate-800/90 border border-slate-700 p-3.5 rounded-xl">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Diferencias de Caja</span>
+            <strong id="re-diferencia-caja" class="font-mono text-xl font-bold block mt-1">$0.00</strong>
+            <span class="text-[10px] text-slate-500">Sobrantes o faltantes</span>
+          </div>
+        </div>
+
+        <!-- Historial de Turnos Cerrados -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+          <div class="px-4 py-3 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-white">Historial de Turnos de <span id="re-emp-nombre" class="text-purple-300"></span> (<span id="re-emp-cargo" class="text-slate-400 font-normal"></span>)</h4>
+            <span class="text-[10.5px] text-slate-500">Ordenado por fecha reciente</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full border-collapse text-left">
+              <thead>
+                <tr class="bg-slate-950 text-slate-400 text-[10px] font-bold uppercase tracking-wider border-b border-slate-800">
+                  <th class="py-2.5 px-3">FECHA</th>
+                  <th class="py-2.5 px-3">TURNO</th>
+                  <th class="py-2.5 px-3">HORARIO</th>
+                  <th class="py-2.5 px-3 text-right">TOTAL COBRADO</th>
+                  <th class="py-2.5 px-3 text-right">EFECTIVO EN CAJA</th>
+                  <th class="py-2.5 px-3 text-center">ARQUEO / CUADRATURA</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-resumen-turnos-empleado">
+                <!-- Filas dinámicas -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================================================================== -->
+      <!-- PESTAÑA 4: GESTIÓN MAESTRA DE HABITACIONES                           -->
+      <!-- ==================================================================== -->
+      <div id="admin-content-habitaciones" class="hidden space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+          <div>
+            <h3 class="text-sm font-bold text-white uppercase tracking-wide">Configuración Maestra de Habitaciones</h3>
+            <p class="text-xs text-slate-400">Modifique tarifas por noche, tipología de cama o retire habitaciones que no estén en venta.</p>
+          </div>
+          <button onclick="abrirModalNuevaHabitacion()" class="bg-purple-800 hover:bg-purple-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-xs">
+            <span class="text-sm font-black">+</span> Nueva Habitación
+          </button>
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900">
+          <table class="w-full border-collapse text-left">
+            <thead>
+              <tr class="bg-slate-950 text-slate-400 text-[10px] font-bold uppercase tracking-wider border-b border-slate-800">
+                <th class="py-3 px-3"># HAB</th>
+                <th class="py-3 px-3">PISO</th>
+                <th class="py-3 px-3">TIPO</th>
+                <th class="py-3 px-3">DOTACIÓN DE CAMAS</th>
+                <th class="py-3 px-3 text-center">CAPACIDAD</th>
+                <th class="py-3 px-3 text-right">TARIFA / NOCHE</th>
+                <th class="py-3 px-3 text-right">ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-admin-habitaciones">
+              <!-- Filas dinámicas -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==================================================================== -->
+      <!-- PESTAÑA 5: FONDOS FIJOS DE CAJAS & RETIROS GERENCIALES               -->
+      <!-- ==================================================================== -->
+      <div id="admin-content-cajas" class="hidden space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+          <div>
+            <h3 class="text-sm font-bold text-white uppercase tracking-wide">Configuración de Fondos Fijos de Caja (Rotación de Turnos)</h3>
+            <p class="text-xs text-slate-400">Establezca los montos base que permanecen en cada gaveta de cambio para el recepcionista entrante.</p>
+          </div>
+          <button onclick="guardarConfiguracionCajasAdmin()" class="bg-purple-800 hover:bg-purple-700 text-white font-bold px-4 py-2 rounded-lg text-xs transition flex items-center gap-1.5 shadow-xs">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            Guardar Configuración
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Config Caja Hospedaje -->
+          <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                <strong class="text-emerald-400 font-bold uppercase text-xs">Caja de Hospedaje</strong>
+              </div>
+              <span class="bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-mono px-2 py-0.5 rounded">Fondo Fijo Recomendado: $200.00</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Dinero base en efectivo que siempre permanece en la gaveta de recepción. Al cerrar turno, la administradora retira las ganancias recaudadas y este valor queda intacto para el siguiente turno.
+            </p>
+            <div class="pt-2">
+              <label class="block text-[10px] uppercase font-bold text-slate-400 mb-1">Monto Fondo Fijo Hospedaje ($ USD):</label>
+              <div class="relative max-w-xs">
+                <span class="absolute left-3 top-2.5 text-slate-400 font-bold">$</span>
+                <input type="number" id="admin-fondo-hospedaje" step="5" min="0" value="200"
+                  class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-7 pr-3 py-2 text-white font-mono font-bold text-sm focus:outline-none focus:border-emerald-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- Config Caja Bar -->
+          <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-sky-400"></span>
+                <strong class="text-sky-400 font-bold uppercase text-xs">Caja de Bar & Cafetería</strong>
+              </div>
+              <span class="bg-sky-950 text-sky-300 border border-sky-800 text-[10px] font-mono px-2 py-0.5 rounded">Fondo Fijo Recomendado: $50.00</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Dinero base en efectivo destinado a dar cambio en ventas directas de cafetería, bebidas y snacks. Al cerrar turno, la administradora retira lo recaudado y este fondo permanece en caja.
+            </p>
+            <div class="pt-2">
+              <label class="block text-[10px] uppercase font-bold text-slate-400 mb-1">Monto Fondo Fijo Bar ($ USD):</label>
+              <div class="relative max-w-xs">
+                <span class="absolute left-3 top-2.5 text-slate-400 font-bold">$</span>
+                <input type="number" id="admin-fondo-bar" step="5" min="0" value="50"
+                  class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-7 pr-3 py-2 text-white font-mono font-bold text-sm focus:outline-none focus:border-sky-500">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pie del Panel -->
+    <div class="bg-slate-950 px-6 py-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 shrink-0">
+      <span>Hotel Norte · Base de Datos Atómica Persistente en Disco</span>
+      <button onclick="cerrarModalAdmin()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold transition">
+        Cerrar Panel
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ======================================================================== -->
+<!-- SUB-MODAL 1: FORMULARIO DE PRODUCTO (BAR & INVENTARIO)                   -->
+<!-- ======================================================================== -->
+<div id="modal-admin-producto-form" class="fixed inset-0 z-60 bg-slate-950/80 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-xl shadow-2xl p-6 text-white space-y-4 modal-animate-in">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <h3 id="ap-form-titulo" class="font-bold text-sm text-purple-200 uppercase">Producto de Bar</h3>
+      <button onclick="cerrarModalProductoForm()" class="text-slate-400 hover:text-white">✕</button>
+    </div>
+    <input type="hidden" id="ap-prod-id">
+    <div class="grid grid-cols-2 gap-3 text-xs">
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Código</label>
+        <input type="text" id="ap-prod-codigo" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 font-mono text-white">
+      </div>
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Ícono</label>
+        <input type="text" id="ap-prod-icono" value="🥤" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-center text-white">
+      </div>
+    </div>
+    <div class="text-xs">
+      <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Nombre del Producto *</label>
+      <input type="text" id="ap-prod-nombre" placeholder="Ej: Agua Güitig (500ml)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white">
+    </div>
+    <div class="text-xs">
+      <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Categoría</label>
+      <select id="ap-prod-categoria" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white">
+        <option value="Bebidas Frías">Bebidas Frías</option>
+        <option value="Cervezas y Licores">Cervezas y Licores</option>
+        <option value="Cafetería y Calientes">Cafetería y Calientes</option>
+        <option value="Snacks y Golosinas">Snacks y Golosinas</option>
+      </select>
+    </div>
+    <div class="grid grid-cols-2 gap-3 text-xs">
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Precio de Venta ($) *</label>
+        <input type="number" step="0.25" id="ap-prod-precio" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 font-mono font-bold text-emerald-400">
+      </div>
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Stock Inicial *</label>
+        <input type="number" id="ap-prod-stock" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 font-mono font-bold text-white">
+      </div>
+    </div>
+    <div class="flex justify-end gap-2 pt-3 border-t border-slate-800 text-xs">
+      <button onclick="cerrarModalProductoForm()" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300">Cancelar</button>
+      <button onclick="guardarProductoAdmin()" class="px-4 py-1.5 rounded-lg bg-purple-700 hover:bg-purple-600 font-bold text-white">Guardar Producto</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================================== -->
+<!-- SUB-MODAL 2: FORMULARIO DE EMPLEADO (PERSONAL & HORARIOS)                -->
+<!-- ======================================================================== -->
+<div id="modal-admin-empleado-form" class="fixed inset-0 z-60 bg-slate-950/80 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-xl shadow-2xl p-6 text-white space-y-4 modal-animate-in">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <h3 class="font-bold text-sm text-purple-200 uppercase">Agregar Colaborador a Nómina</h3>
+      <button onclick="cerrarModalEmpleadoForm()" class="text-slate-400 hover:text-white">✕</button>
+    </div>
+    <div class="text-xs">
+      <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Apellidos y Nombres *</label>
+      <input type="text" id="ae-nombre" placeholder="Ej: Wilson Paredes" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white">
+    </div>
+    <div class="grid grid-cols-2 gap-3 text-xs">
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Cargo</label>
+        <input type="text" id="ae-cargo" value="Recepcionista" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white">
+      </div>
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Clave PIN (4 dígitos) *</label>
+        <input type="text" maxlength="4" id="ae-pin" placeholder="1234" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 font-mono font-bold text-white tracking-widest text-center">
+      </div>
+    </div>
+    <div class="text-xs">
+      <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Horario Asignado</label>
+      <select id="ae-turno" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white">
+        <option value="Mañana (08:00 – 17:00)">Mañana (08:00 – 17:00)</option>
+        <option value="Tarde (14:00 – 22:00)">Tarde (14:00 – 22:00)</option>
+        <option value="Noche (22:00 – 06:00)">Noche (22:00 – 06:00)</option>
+        <option value="Supervisión General">Supervisión General</option>
+      </select>
+    </div>
+    <div class="flex justify-end gap-2 pt-3 border-t border-slate-800 text-xs">
+      <button onclick="cerrarModalEmpleadoForm()" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300">Cancelar</button>
+      <button onclick="guardarNuevoEmpleado()" class="px-4 py-1.5 rounded-lg bg-purple-700 hover:bg-purple-600 font-bold text-white">Guardar en Nómina</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================================== -->
+<!-- SUB-MODAL 3: FORMULARIO DE HABITACIÓN (ALTA Y MODIFICACIÓN)              -->
+<!-- ======================================================================== -->
+<div id="modal-admin-hab-form" class="fixed inset-0 z-60 bg-slate-950/80 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-slate-700 w-full max-w-lg rounded-xl shadow-2xl p-6 text-white space-y-4 modal-animate-in">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <h3 id="ah-form-titulo" class="font-bold text-sm text-purple-200 uppercase">Habitación</h3>
+      <button onclick="cerrarModalHabitacionForm()" class="text-slate-400 hover:text-white">✕</button>
+    </div>
+    <input type="hidden" id="ah-hab-id">
+    <div class="grid grid-cols-2 gap-3 text-xs">
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Número de Habitación *</label>
+        <input type="text" id="ah-numero" placeholder="Ej: 36" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 font-mono font-bold text-white">
+      </div>
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Piso *</label>
+        <select id="ah-piso" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white">
+          <option value="pb">Planta Baja (PB)</option>
+          <option value="piso1">1° Piso Alto (1P)</option>
+          <option value="piso2">2° Piso Alto (2P)</option>
+          <option value="piso3">3° Piso Alto (3P)</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-3 text-xs">
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Tipo de Habitación</label>
+        <select id="ah-tipo" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white">
+          <option value="Individual">Individual</option>
+          <option value="Matrimonial">Matrimonial</option>
+          <option value="Doble Twin">Doble Twin</option>
+          <option value="Triple">Triple</option>
+          <option value="Cuádruple">Cuádruple</option>
+          <option value="Quíntuple">Quíntuple</option>
+        </select>
+      </div>
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Tarifa por Noche ($) *</label>
+        <input type="number" id="ah-tarifa" value="30" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 font-mono font-bold text-emerald-400">
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-3 text-xs">
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Capacidad Máx. Personas</label>
+        <input type="number" id="ah-capacidad" value="2" min="1" max="10" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 font-mono text-white text-center">
+      </div>
+      <div>
+        <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">N.º de Camas</label>
+        <input type="number" id="ah-camas" value="1" min="1" max="6" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 font-mono text-white text-center">
+      </div>
+    </div>
+    <div class="text-xs">
+      <label class="block font-bold text-slate-400 uppercase text-[10px] mb-1">Descripción de Camas (Dotación)</label>
+      <input type="text" id="ah-descripcion-camas" placeholder="Ej: 1 CAMA DE 2 PLAZAS Y 1 INDIVIDUAL" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-white">
+    </div>
+    <div class="flex justify-end gap-2 pt-3 border-t border-slate-800 text-xs">
+      <button onclick="cerrarModalHabitacionForm()" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300">Cancelar</button>
+      <button onclick="guardarHabitacionAdmin()" class="px-4 py-1.5 rounded-lg bg-purple-700 hover:bg-purple-600 font-bold text-white">Guardar Habitación</button>
+    </div>
+  </div>
+</div>

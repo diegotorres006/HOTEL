@@ -1,0 +1,256 @@
+<!-- COMPONENTE MODAL: Registro de Huésped Check-in / Reserva (views/modals/checkin-modal.html) -->
+<div id="modal-checkin" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-white border border-slate-300 w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] modal-animate-in">
+
+    <div class="bg-slate-900 px-6 py-4 flex justify-between items-center text-white">
+      <div class="flex items-center gap-3">
+        <span id="cin-hab-num" class="bg-blue-700 text-white font-mono font-bold text-base px-3 py-1 rounded">HAB 01</span>
+        <div>
+          <h3 id="cin-modal-titulo" class="font-bold text-white text-sm uppercase tracking-wide">Registro de Huésped (Check-in)</h3>
+          <p id="cin-hab-sub" class="text-xs text-slate-300"></p>
+        </div>
+      </div>
+      <button onclick="cerrarModalCheckin()" class="text-slate-400 hover:text-white p-1 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="p-6 space-y-4 overflow-y-auto flex-1 text-xs text-slate-700">
+
+      <!-- Trazabilidad de Operador -->
+      <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg flex items-center justify-between">
+        <div>
+          <span class="text-slate-500 text-[10px] uppercase font-bold block">Operador Responsable</span>
+          <strong id="cin-empleado-badge" class="text-slate-900 text-xs font-bold"></strong>
+          <span class="text-slate-600 text-[11px] ml-1">(<span id="cin-turno-badge"></span>)</span>
+        </div>
+        <div class="text-right">
+          <span class="text-slate-500 text-[10px] uppercase font-bold block">Hora del Sistema</span>
+          <span id="cin-hora-registro" class="font-mono text-slate-900 font-bold text-xs"></span>
+        </div>
+      </div>
+
+      <!-- Aviso de Reserva Futura -->
+      <div id="cin-aviso-futuro" class="hidden bg-indigo-950/70 border border-indigo-700 p-3 rounded-lg flex items-center justify-between text-indigo-200">
+        <div>
+          <strong class="text-xs font-bold uppercase block">Programación de Reserva Futura</strong>
+          <p id="cin-aviso-fecha-texto" class="text-[11px] text-indigo-300"></p>
+        </div>
+        <span class="bg-indigo-900 text-indigo-200 text-[10px] font-bold px-2.5 py-0.5 rounded border border-indigo-600 uppercase">Reserva</span>
+      </div>
+
+      <!-- Identificación (Búsqueda en Base de Datos + SRI D2Fac) -->
+      <div class="bg-slate-50 p-4 rounded-lg border border-slate-300 space-y-2">
+        <div class="flex justify-between items-center">
+          <label class="font-bold text-slate-900 text-xs uppercase tracking-wide">Documento de Identidad (Cédula / RUC / Pasaporte) *</label>
+          <span class="text-[11px] text-slate-500">Consulta automática de historial y SRI</span>
+        </div>
+        <div class="relative">
+          <input type="text" id="cin-cedula" maxlength="13" oninput="procesarBusquedaCedula(this.value)"
+            placeholder="Ingrese número de identificación..."
+            class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm text-slate-900 font-mono tracking-wider focus:outline-none focus:border-blue-700">
+          <span id="cin-cedula-badge" class="absolute right-3 top-2.5 text-[11px] font-bold hidden"></span>
+        </div>
+        <p class="text-[11px] text-slate-500">Ingrese Cédula o RUC para consulta automática en base histórica y SRI / D2Fac.</p>
+      </div>
+
+      <!-- Alerta de Restricción / Lista Negra -->
+      <div id="alerta-lista-negra" class="hidden bg-red-950/80 border-l-4 border-l-red-500 border border-red-800 p-4 rounded-lg alerta-corporativa text-red-200">
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <div class="flex-1">
+            <h4 class="font-bold text-red-200 text-xs uppercase tracking-wide">Restricción de Admisión — Huésped Reportado</h4>
+            <p id="lista-negra-motivo" class="text-xs text-red-300 mt-1"></p>
+            <div class="mt-2 text-[11px] text-red-200 font-semibold bg-red-900/60 px-2.5 py-1.5 rounded border border-red-700">
+              Disposición Administrativa: No autorizar hospedaje sin aprobación de gerencia.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notificación Cliente Frecuente -->
+      <div id="notif-cliente-frecuente" class="hidden bg-emerald-950/70 border-l-4 border-l-emerald-500 border border-emerald-800 p-3 rounded-lg flex items-center gap-3 text-emerald-200">
+        <svg class="w-5 h-5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div>
+          <strong class="text-xs font-bold block">Cliente Registrado en Base de Datos</strong>
+          <p id="frecuente-detalle" class="text-[11px] text-emerald-300 mt-0.5"></p>
+        </div>
+      </div>
+
+      <!-- Hora de Ingreso, Hora de Pago y # Huéspedes -->
+      <div class="grid grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+        <div>
+          <label class="block text-slate-600 font-bold uppercase text-[10px] mb-1">Hora de Ingreso *</label>
+          <input type="time" id="cin-hora-entrada" class="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1.5 text-slate-900 font-mono font-semibold text-xs focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-slate-600 font-bold uppercase text-[10px] mb-1">Hora de Pago *</label>
+          <input type="time" id="cin-hora-pago" class="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1.5 text-slate-900 font-mono font-semibold text-xs focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-slate-600 font-bold uppercase text-[10px] mb-1">N.º Huéspedes *</label>
+          <input type="number" id="cin-num-huespedes" value="1" min="1" max="10" class="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1.5 text-slate-900 font-mono font-semibold text-xs focus:outline-none">
+        </div>
+      </div>
+
+      <!-- Datos Personales -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label class="block font-bold text-slate-600 uppercase text-[10px] mb-1">Apellidos y Nombres *</label>
+          <input type="text" id="cin-nombre" placeholder="Nombre completo del titular"
+            class="w-full bg-white border border-slate-300 rounded-md p-2 text-xs text-slate-900 focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-600 uppercase text-[10px] mb-1">Ciudad / Procedencia *</label>
+          <input type="text" id="cin-procedencia" placeholder="Ej: Cuenca"
+            class="w-full bg-white border border-slate-300 rounded-md p-2 text-xs text-slate-900 focus:outline-none">
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label class="block font-bold text-slate-600 uppercase text-[10px] mb-1">Teléfono de Contacto *</label>
+          <input type="tel" id="cin-telefono" placeholder="0991234567"
+            class="w-full bg-white border border-slate-300 rounded-md p-2 text-xs text-slate-900 font-mono focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-600 uppercase text-[10px] mb-1">Observaciones / Placa Vehículo</label>
+          <input type="text" id="cin-obs" placeholder="Placa, requerimientos especiales..."
+            class="w-full bg-white border border-slate-300 rounded-md p-2 text-xs text-slate-900 focus:outline-none">
+        </div>
+      </div>
+
+      <!-- Dotación Entregada -->
+      <div id="cin-seccion-dotacion" class="bg-slate-50 p-3 rounded-lg border border-slate-200 grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-slate-600 mb-1 font-bold uppercase text-[10px]">Controles Entregados (TV/AC)</label>
+          <input type="number" id="cin-controles" value="1" min="0" max="3"
+            class="w-full bg-white border border-slate-300 rounded-md p-1.5 text-center font-mono font-bold text-slate-900">
+        </div>
+        <div>
+          <label class="block text-slate-600 mb-1 font-bold uppercase text-[10px]">Toallas Entregadas</label>
+          <input type="number" id="cin-toallas" value="2" min="0" max="6"
+            class="w-full bg-white border border-slate-300 rounded-md p-1.5 text-center font-mono font-bold text-slate-900">
+        </div>
+      </div>
+
+      <!-- Liquidación y Cobro -->
+      <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2.5">
+        <div class="flex justify-between text-[11px] pb-1.5 border-b border-slate-200">
+          <span id="cin-titulo-pagos" class="font-bold text-slate-800 uppercase tracking-wider">Liquidación de Hospedaje</span>
+          <span class="text-slate-500">Valores expresados en USD</span>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-slate-600 mb-1 font-bold uppercase text-[10px]" id="cin-lbl-total">Tarifa Total ($)</label>
+            <input type="number" id="cin-total" value="30.00" oninput="calcularDebitoCin()"
+              class="w-full bg-white border border-slate-300 rounded-md p-2 text-slate-900 font-bold font-mono">
+          </div>
+          <div>
+            <label class="block text-emerald-400 mb-1 font-bold uppercase text-[10px]" id="cin-lbl-pagado">Valor Pagado ($)</label>
+            <input type="number" id="cin-pagado" value="30.00" oninput="calcularDebitoCin()"
+              class="w-full bg-white border-2 border-emerald-600 rounded-md p-2 text-emerald-400 font-bold font-mono focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-amber-400 mb-1 font-bold uppercase text-[10px]">Saldo Débito ($)</label>
+            <input type="text" id="cin-debito" value="$0.00" readonly
+              class="w-full bg-slate-100 border border-slate-300 rounded-md p-2 text-amber-400 font-bold font-mono">
+          </div>
+        </div>
+        <div class="flex items-center justify-between pt-1 text-xs text-slate-600">
+          <span class="font-medium">Forma de Pago:</span>
+          <select id="cin-metodo-pago" class="bg-white border border-slate-300 rounded-md px-3 py-1 text-slate-900 text-xs font-semibold">
+            <option value="Efectivo">Efectivo en Caja</option>
+            <option value="Transferencia">Transferencia Bancaria</option>
+            <option value="Datáfono">Tarjeta / Datáfono</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Facturación Electrónica D2Fac (SRI) -->
+      <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-200">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-900 uppercase tracking-wide">Facturación Electrónica D2Fac (SRI)</span>
+              <span class="text-[10px] bg-blue-950 text-blue-300 border border-blue-800 px-2 py-0.5 rounded font-mono">001-002 · RUC 0301752861001</span>
+            </div>
+            <p class="text-[11px] text-slate-500 mt-0.5">Si el huésped no solicita factura, déjelo en "No solicita factura".</p>
+          </div>
+        </div>
+
+        <!-- Selector de 3 modalidades -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <button type="button" id="btn-modo-fac-ninguna" onclick="seleccionarModoFacturaCin('ninguna')"
+            class="p-2.5 rounded-lg border text-left transition flex flex-col justify-between bg-blue-950/80 border-blue-500 text-white">
+            <span class="text-[11px] font-bold uppercase tracking-wide block">1. No solicita factura</span>
+            <span class="text-[10px] text-slate-400 mt-0.5 block">Solo control interno de recepción</span>
+          </button>
+          <button type="button" id="btn-modo-fac-usuario" onclick="seleccionarModoFacturaCin('usuario')"
+            class="p-2.5 rounded-lg border text-left transition flex flex-col justify-between bg-slate-900/50 border-slate-700 text-slate-300 hover:border-blue-500">
+            <span class="text-[11px] font-bold uppercase tracking-wide block">2. Datos del Huésped</span>
+            <span class="text-[10px] text-slate-400 mt-0.5 block">Facturar a Cédula/RUC del usuario</span>
+          </button>
+          <button type="button" id="btn-modo-fac-empresa" onclick="seleccionarModoFacturaCin('empresa')"
+            class="p-2.5 rounded-lg border text-left transition flex flex-col justify-between bg-slate-900/50 border-slate-700 text-slate-300 hover:border-blue-500">
+            <span class="text-[11px] font-bold uppercase tracking-wide block">3. Datos de Empresa</span>
+            <span class="text-[10px] text-slate-400 mt-0.5 block">Facturar a RUC de compañía</span>
+          </button>
+        </div>
+
+        <input type="hidden" id="cin-modo-factura" value="ninguna">
+        <input type="checkbox" id="cin-toggle-factura" class="hidden">
+
+        <div id="cin-factura-fields" class="hidden pt-3 border-t border-slate-200 space-y-3">
+          <div id="cin-banner-modo-factura" class="bg-blue-950/60 border border-blue-800/80 px-3 py-2 rounded text-[11px] text-blue-200 flex items-center justify-between">
+            <span id="cin-texto-modo-factura">Emitiendo con datos personales del huésped alojado.</span>
+            <button type="button" onclick="consultarClienteD2FacEnVivo()" class="bg-blue-800 hover:bg-blue-700 text-white px-2.5 py-1 rounded text-[10px] font-semibold transition">
+              Consultar RUC/Cédula en D2Fac
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label id="lbl-cin-ruc" class="block font-bold text-slate-600 uppercase text-[10px] mb-1">Cédula / RUC para Factura *</label>
+              <input type="text" id="cin-ruc" maxlength="13" oninput="autoConsultarRucEmpresaD2Fac(this.value)" placeholder="Ej: 0301752861001" class="w-full bg-white border border-slate-300 rounded-md p-2 text-slate-900 font-mono">
+            </div>
+            <div>
+              <label id="lbl-cin-razon" class="block font-bold text-slate-600 uppercase text-[10px] mb-1">Nombres / Razón Social *</label>
+              <input type="text" id="cin-razon" placeholder="Nombre o Razón Social" class="w-full bg-white border border-slate-300 rounded-md p-2 text-slate-900">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-slate-600 uppercase text-[10px] mb-1">Correo Electrónico (RIDE) *</label>
+              <input type="email" id="cin-correo" placeholder="cliente@empresa.com" class="w-full bg-white border border-slate-300 rounded-md p-2 text-slate-900">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 uppercase text-[10px] mb-1">Dirección Fiscal *</label>
+              <input type="text" id="cin-direccion" placeholder="Cuenca" value="CUENCA" class="w-full bg-white border border-slate-300 rounded-md p-2 text-slate-900">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 uppercase text-[10px] mb-1">Teléfono Factura</label>
+              <input type="text" id="cin-tel-factura" placeholder="0990000000" class="w-full bg-white border border-slate-300 rounded-md p-2 text-slate-900 font-mono">
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between bg-slate-100 px-3 py-2 rounded border border-slate-300">
+            <label class="flex items-center gap-2 cursor-pointer text-xs">
+              <input type="checkbox" id="cin-auto-emitir-d2fac" checked class="rounded border-slate-500">
+              <span class="font-semibold text-slate-800">Emitir factura automáticamente en D2Fac (SRI) al guardar el ingreso</span>
+            </label>
+            <span id="cin-estado-busqueda-d2fac" class="text-[10px] font-mono text-sky-400"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bg-slate-50 px-6 py-3.5 border-t border-slate-200 flex justify-between items-center">
+      <button onclick="cerrarModalCheckin()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900">Cancelar</button>
+      <button onclick="guardarRegistro()" id="btn-confirmar-ingreso"
+        class="bg-blue-700 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg transition text-xs shadow-xs">
+        Registrar Ingreso
+      </button>
+    </div>
+  </div>
+</div>
