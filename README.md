@@ -1,11 +1,11 @@
 # 🏨 Hotel Norte PMS — Sistema Integral de Gestión Hotelera (v2.0 Beta)
 
 [![Test Suite](https://img.shields.io/badge/PMS%20Suite-6%2F6%20Passed-emerald.svg)](#)
-[![Deployment](https://img.shields.io/badge/Demo%20En%20Vivo-GitHub%20Pages-blue.svg)](https://pasantecinco.github.io/HOTEL-NORTE/)
+[![Deployment](https://img.shields.io/badge/Demo%20En%20Vivo-GitHub%20Pages-blue.svg)](https://diegotorres006.github.io/HOTEL/)
 [![Licencia](https://img.shields.io/badge/Licencia-Uso%20Interno-slate.svg)](#)
 
 Acceso a la versión Beta web en vivo:  
-🌐 **[https://pasantecinco.github.io/HOTEL-NORTE/](https://pasantecinco.github.io/HOTEL-NORTE/)**
+🌐 **[https://diegotorres006.github.io/HOTEL/](https://diegotorres006.github.io/HOTEL/)**
 
 ---
 
@@ -126,7 +126,7 @@ npm test
 
 ### Modo Web Directo (GitHub Pages)
 Abra cualquier navegador moderno e ingrese a:  
-**[https://pasantecinco.github.io/HOTEL-NORTE/](https://pasantecinco.github.io/HOTEL-NORTE/)**  
+**[https://diegotorres006.github.io/HOTEL/](https://diegotorres006.github.io/HOTEL/)**  
 *(En este modo el sistema opera con el motor de almacenamiento local en el navegador).*
 
 ### Modo Servidor Local (Recepción Hotel Norte con Sincronizador de Booking)
